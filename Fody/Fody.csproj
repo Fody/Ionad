@@ -51,6 +51,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CecilExtensions.cs" />
     <Compile Include="ModuleWeaver.cs" />
   </ItemGroup>
   <ItemGroup>

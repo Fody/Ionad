@@ -1,48 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
 
 public static class AssemblyWeaver
 {
-    public class TestTraceListener : TraceListener
-    {
-        public string Message;
-
-        public void Reset()
-        {
-            Message = null;
-        }
-
-        public override void Write(string message)
-        {
-            if (Message != null)
-                throw new Exception("More than one Debug message came through. Did you forget to reset before a test?");
-
-            Message = message;
-        }
-
-        public override void WriteLine(string message)
-        {
-            if (Message != null)
-                throw new Exception("More than one Debug message came through. Did you forget to reset before a test?");
-
-            Message = message;
-        }
-    }
-
     public static Assembly Assembly;
-    public static TestTraceListener TestListener;
 
     static AssemblyWeaver()
     {
-        TestListener = new TestTraceListener();
-
-        Debug.Listeners.Clear();
-        Debug.Listeners.Add(TestListener);
-
         BeforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
 
 #if (!DEBUG)
@@ -60,6 +27,7 @@ public static class AssemblyWeaver
             ModuleDefinition = moduleDefinition,
             AssemblyResolver = assemblyResolver,
             LogError = LogError,
+            LogInfo = LogInfo,
             DefineConstants = new[] { "DEBUG" } // Always testing the debug weaver
         };
 
@@ -77,5 +45,11 @@ public static class AssemblyWeaver
         Errors.Add(error);
     }
 
+    private static void LogInfo(string error)
+    {
+        Infos.Add(error);
+    }
+
     public static List<string> Errors = new List<string>();
+    public static List<string> Infos = new List<string>();
 }
