@@ -1,5 +1,7 @@
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
+![Ionad Icon - A black circle with 3 arrows forming an outer circle.](https://raw.github.com/Fody/Ionad/master/Icons/package_icon.png)
+
 Ionad replaces static types with your own.
 
 ## Nuget 

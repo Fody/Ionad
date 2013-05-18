@@ -18,4 +18,19 @@ public class DateTimeTests
         var now = sample.GetDateTime();
         Assert.AreEqual(new DateTime(1978, 1, 13), now);
     }
+
+    [Test]
+    public void PropertyUsesDateTime()
+    {
+        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
+        var now = sample.SomeProperty;
+        Assert.AreEqual(new DateTime(1978, 1, 13), now);
+    }
+
+    [Test]
+    public void MissingReplacementReportsError()
+    {
+        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
+        Assert.AreEqual("Missing 'System.DateTime.get_Today()' in 'DateTimeSubstitute'", AssemblyWeaver.Errors[0]);
+    }
 }
