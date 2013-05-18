@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 public class ModuleWeaver
 {
@@ -27,7 +29,7 @@ public class ModuleWeaver
             LogInfo("No Static Replacements found");
         else
         {
-            ProcessAssembly(types);
+            ProcessAssembly(types, replacements);
             RemoveAttributes(replacements.Values);
         }
 
@@ -52,11 +54,51 @@ public class ModuleWeaver
         return replacements;
     }
 
-    private void ProcessAssembly(IEnumerable<TypeDefinition> types)
+    private void ProcessAssembly(IEnumerable<TypeDefinition> types, Dictionary<TypeDefinition, TypeDefinition> replacements)
     {
         foreach (var type in types)
         {
+            foreach (var method in type.MethodsWithBody())
+                ReplaceCalls(method.Body, replacements);
+
+            foreach (var property in type.ConcreteProperties())
+            {
+                if (property.GetMethod != null)
+                    ReplaceCalls(property.GetMethod.Body, replacements);
+                if (property.SetMethod != null)
+                    ReplaceCalls(property.SetMethod.Body, replacements);
+            }
         }
+    }
+
+    private void ReplaceCalls(MethodBody body, Dictionary<TypeDefinition, TypeDefinition> replacements)
+    {
+        body.SimplifyMacros();
+
+        var calls = body.Instructions.Where(i => i.OpCode == OpCodes.Call);
+
+        foreach (var call in calls)
+        {
+            var method = ((MethodReference)call.Operand).Resolve();
+            var declaringType = method.DeclaringType.Resolve();
+
+            if (!method.IsStatic || !replacements.ContainsKey(declaringType))
+                continue;
+
+            var replacement = replacements[declaringType];
+            var replacementMethod = replacement.Methods.FirstOrDefault(m => m.Name == method.Name);
+
+            if (replacementMethod == null)
+            {
+                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringType.FullName, method.Name, replacement.FullName));
+                continue;
+            }
+
+            call.Operand = replacementMethod;
+        }
+
+        body.InitLocals = true;
+        body.OptimizeMacros();
     }
 
     private void RemoveAttributes(IEnumerable<TypeDefinition> types)
