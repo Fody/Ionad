@@ -18,6 +18,13 @@ public class DateTimeTests
         var now = sample.GetDateTime();
         Assert.AreEqual(new DateTime(1978, 1, 13), now);
     }
+    [Test]
+    public void GenericClass()
+    {
+        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
+        var now = sample.GetDateTime();
+        Assert.AreEqual(new DateTime(1978, 1, 13), now);
+    }
 
     [Test]
     public void PropertyUsesDateTime()
