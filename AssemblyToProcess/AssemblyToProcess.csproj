@@ -35,8 +35,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WithGenericMethodSubstitute.cs" />
     <Compile Include="ClassWithDateTime.cs" />
+    <Compile Include="WithGenericMethodUsage.cs" />
     <Compile Include="DateTimeSubstitute.cs" />
+    <Compile Include="WithGenericMethodToSubstitute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">

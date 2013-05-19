@@ -64,6 +64,7 @@
     <Compile Include="MockAssemblyResolver.cs" />
     <Compile Include="VerifyTest.cs" />
     <Compile Include="Verifier.cs" />
+    <Compile Include="WithGenericMethodTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
