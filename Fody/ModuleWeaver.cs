@@ -22,7 +22,8 @@ public class ModuleWeaver
 
     public void Execute()
     {
-        var types = ModuleDefinition.GetTypes();
+        var types = ModuleDefinition.GetTypes()
+            .ToList();
         var replacements = FindReplacements(types);
 
         if (replacements.Count == 0)
@@ -79,22 +80,36 @@ public class ModuleWeaver
 
         foreach (var call in calls)
         {
-            var method = ((MethodReference)call.Operand).Resolve();
-            var declaringType = method.DeclaringType.Resolve();
+            var originalMethodReference = (MethodReference)call.Operand;
+            var originalMethodDefinition = originalMethodReference.Resolve();
+            var declaringType = originalMethodDefinition.DeclaringType.Resolve();
 
-            if (!method.IsStatic || !replacements.ContainsKey(declaringType))
+            if (!originalMethodDefinition.IsStatic || !replacements.ContainsKey(declaringType))
                 continue;
 
             var replacement = replacements[declaringType];
-            var replacementMethod = replacement.Methods.FirstOrDefault(m => m.Name == method.Name);
+            var replacementMethod = replacement.Methods.FirstOrDefault(m => m.Name == originalMethodDefinition.Name);
 
             if (replacementMethod == null)
             {
-                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringType.FullName, method.Name, replacement.FullName));
+                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringType.FullName, originalMethodDefinition.Name, replacement.FullName));
                 continue;
             }
-
-            call.Operand = replacementMethod;
+            if (originalMethodReference.IsGenericInstance)
+            {
+                var originalGenericInstanceMethod = (GenericInstanceMethod)originalMethodReference;
+                var genericInstanceMethod = new GenericInstanceMethod(replacementMethod);
+                foreach (var arg in originalGenericInstanceMethod.GenericArguments)
+                {
+                    genericInstanceMethod.GenericArguments.Add(arg);
+                }
+                
+                call.Operand = ModuleDefinition.Import(genericInstanceMethod);
+            }
+            else
+            {
+                call.Operand = replacementMethod;   
+            }
         }
 
         body.InitLocals = true;
