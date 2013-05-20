@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrokenReplacementTests.cs" />
+    <Compile Include="GenericTests.cs" />
     <Compile Include="Helpers\AssemblyWeaver.cs" />
     <Compile Include="DateTimeTests.cs" />
     <Compile Include="Helpers\MockAssemblyResolver.cs" />

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
@@ -29,5 +30,42 @@ public static class CecilExtensions
     public static IEnumerable<PropertyDefinition> ConcreteProperties(this TypeDefinition type)
     {
         return type.Properties.Where(x => (x.GetMethod == null || !x.GetMethod.IsAbstract) && (x.SetMethod == null || !x.SetMethod.IsAbstract));
+    }
+
+    private static MethodReference CloneMethodWithDeclaringType(MethodDefinition methodDef, TypeReference declaringTypeRef)
+    {
+        if (!declaringTypeRef.IsGenericInstance || methodDef == null)
+        {
+            return methodDef;
+        }
+
+        var methodRef = new MethodReference(methodDef.Name, methodDef.ReturnType, declaringTypeRef)
+        {
+            CallingConvention = methodDef.CallingConvention,
+            HasThis = methodDef.HasThis,
+            ExplicitThis = methodDef.ExplicitThis
+        };
+
+        foreach (ParameterDefinition paramDef in methodDef.Parameters)
+        {
+            methodRef.Parameters.Add(new ParameterDefinition(paramDef.Name, paramDef.Attributes, paramDef.ParameterType));
+        }
+
+        foreach (GenericParameter genParamDef in methodDef.GenericParameters)
+        {
+            methodRef.GenericParameters.Add(new GenericParameter(genParamDef.Name, methodRef));
+        }
+
+        return methodRef;
+    }
+
+    public static MethodReference ReferenceMethod(this TypeReference typeRef, Func<MethodDefinition, bool> methodSelector)
+    {
+        return CloneMethodWithDeclaringType(typeRef.Resolve().Methods.FirstOrDefault(methodSelector), typeRef);
+    }
+
+    public static MethodReference ReferenceMethod(this TypeReference typeRef, string methodName)
+    {
+        return ReferenceMethod(typeRef, m => m.Name == methodName);
     }
 }

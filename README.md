@@ -40,6 +40,7 @@ To Install from the Nuget Package Manager Console
 ## Contributors
 
   * [Cameron MacFarland](https://github.com/distantcam)
+  * [Simon Cropp](https://github.com/simoncropp)
 
 ## Icon
 

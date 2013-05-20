@@ -82,21 +82,33 @@ public class ModuleWeaver
         {
             var originalMethodReference = (MethodReference)call.Operand;
             var originalMethodDefinition = originalMethodReference.Resolve();
-            var declaringType = originalMethodDefinition.DeclaringType.Resolve();
+            var declaringTypeReference = originalMethodReference.DeclaringType;
+            var declaringTypeDefinition = declaringTypeReference.Resolve();
 
-            if (!originalMethodDefinition.IsStatic || !replacements.ContainsKey(declaringType))
+            if (!originalMethodDefinition.IsStatic || !replacements.ContainsKey(declaringTypeDefinition))
                 continue;
 
-            var replacement = replacements[declaringType];
-            var replacementMethod = replacement.Methods.FirstOrDefault(m => m.Name == originalMethodDefinition.Name);
+            var replacementTypeReference = ModuleDefinition.Import(replacements[declaringTypeDefinition]);
+            if (declaringTypeReference.IsGenericInstance)
+            {
+                var declaringGenericType = (GenericInstanceType)declaringTypeReference;
+                var genericType = new GenericInstanceType(replacementTypeReference);
+                foreach (var arg in declaringGenericType.GenericArguments)
+                {
+                    genericType.GenericArguments.Add(arg);
+                }
+                replacementTypeReference = ModuleDefinition.Import(genericType);
+            }
+
+            var replacementMethod = replacementTypeReference.ReferenceMethod(originalMethodDefinition.Name);
 
             if (replacementMethod == null)
             {
-                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringType.FullName, originalMethodDefinition.Name, replacement.FullName));
+                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringTypeDefinition.FullName, originalMethodDefinition.Name, replacementTypeReference.FullName));
                 continue;
             }
 
-            if (!replacementMethod.IsStatic)
+            if (!replacementMethod.Resolve().IsStatic)
             {
                 LogError(String.Format("Replacement method '{0}' is not static", replacementMethod.FullName));
                 continue;

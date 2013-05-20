@@ -35,9 +35,14 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassWithGenericUsage.cs" />
     <Compile Include="StaticBasic.cs" />
     <Compile Include="StaticBasicReplacementWithBrokenMethod.cs" />
     <Compile Include="ClassWithBrokenReplacement.cs" />
+    <Compile Include="StaticGeneric.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StaticGenericReplacement.cs" />
     <Compile Include="StaticWithGenericMethodReplacement.cs" />
     <Compile Include="ClassWithDateTime.cs" />
     <Compile Include="ClassWithGenericMethodUsage.cs" />
