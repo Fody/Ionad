@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class WithGenericMethodToSubstitute
+public class StaticWithGenericMethod
 {
     public static T Method<T>()
     {

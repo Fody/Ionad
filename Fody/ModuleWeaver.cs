@@ -95,6 +95,13 @@ public class ModuleWeaver
                 LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringType.FullName, originalMethodDefinition.Name, replacement.FullName));
                 continue;
             }
+
+            if (!replacementMethod.IsStatic)
+            {
+                LogError(String.Format("Replacement method '{0}' is not static", replacementMethod.FullName));
+                continue;
+            }
+
             if (originalMethodReference.IsGenericInstance)
             {
                 var originalGenericInstanceMethod = (GenericInstanceMethod)originalMethodReference;
@@ -103,12 +110,12 @@ public class ModuleWeaver
                 {
                     genericInstanceMethod.GenericArguments.Add(arg);
                 }
-                
+
                 call.Operand = ModuleDefinition.Import(genericInstanceMethod);
             }
             else
             {
-                call.Operand = replacementMethod;   
+                call.Operand = replacementMethod;
             }
         }
 

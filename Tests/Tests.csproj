@@ -59,12 +59,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyWeaver.cs" />
+    <Compile Include="BrokenReplacementTests.cs" />
+    <Compile Include="Helpers\AssemblyWeaver.cs" />
     <Compile Include="DateTimeTests.cs" />
-    <Compile Include="MockAssemblyResolver.cs" />
+    <Compile Include="Helpers\MockAssemblyResolver.cs" />
     <Compile Include="VerifyTest.cs" />
-    <Compile Include="Verifier.cs" />
-    <Compile Include="WithGenericMethodTests.cs" />
+    <Compile Include="Helpers\Verifier.cs" />
+    <Compile Include="GenericMethodTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

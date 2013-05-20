@@ -35,11 +35,14 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WithGenericMethodSubstitute.cs" />
+    <Compile Include="StaticBasic.cs" />
+    <Compile Include="StaticBasicReplacementWithBrokenMethod.cs" />
+    <Compile Include="ClassWithBrokenReplacement.cs" />
+    <Compile Include="StaticWithGenericMethodReplacement.cs" />
     <Compile Include="ClassWithDateTime.cs" />
-    <Compile Include="WithGenericMethodUsage.cs" />
-    <Compile Include="DateTimeSubstitute.cs" />
-    <Compile Include="WithGenericMethodToSubstitute.cs" />
+    <Compile Include="ClassWithGenericMethodUsage.cs" />
+    <Compile Include="DateTimeReplacement.cs" />
+    <Compile Include="StaticWithGenericMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReferenceAssembly\ReferenceAssembly.csproj">
