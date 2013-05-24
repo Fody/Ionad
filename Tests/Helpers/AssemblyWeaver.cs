@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Pdb;
 
 public static class AssemblyWeaver
 {
@@ -10,16 +11,32 @@ public static class AssemblyWeaver
     static AssemblyWeaver()
     {
         BeforeAssemblyPath = Path.GetFullPath(@"..\..\..\AssemblyToProcess\bin\Debug\AssemblyToProcess.dll");
+        var beforePdbPath = Path.ChangeExtension(BeforeAssemblyPath, "pdb");
 
 #if (!DEBUG)
         BeforeAssemblyPath = BeforeAssemblyPath.Replace("Debug", "Release");
+        beforePdbPath = beforePdbPath.Replace("Debug", "Release");
 #endif
         AfterAssemblyPath = BeforeAssemblyPath.Replace(".dll", "2.dll");
+        var afterPdbPath = beforePdbPath.Replace(".pdb", "2.pdb");
 
         File.Copy(BeforeAssemblyPath, AfterAssemblyPath, true);
+        if (File.Exists(beforePdbPath))
+            File.Copy(beforePdbPath, afterPdbPath, true);
 
-        var assemblyResolver = new MockAssemblyResolver();
-        var moduleDefinition = ModuleDefinition.ReadModule(AfterAssemblyPath);
+        var assemblyResolver = new DefaultAssemblyResolver();
+        var mockAssemblyResolver = new MockAssemblyResolver();
+        var readerParameters = new ReaderParameters { AssemblyResolver = assemblyResolver };
+        var writerParameters = new WriterParameters();
+
+        if (File.Exists(afterPdbPath))
+        {
+            readerParameters.SymbolReaderProvider = new PdbReaderProvider();
+            readerParameters.ReadSymbols = true;
+            writerParameters.WriteSymbols = true;
+        }
+
+        var moduleDefinition = ModuleDefinition.ReadModule(AfterAssemblyPath, readerParameters);
 
         var weavingTask = new ModuleWeaver
         {
@@ -31,7 +48,7 @@ public static class AssemblyWeaver
         };
 
         weavingTask.Execute();
-        moduleDefinition.Write(AfterAssemblyPath);
+        moduleDefinition.Write(AfterAssemblyPath, writerParameters);
 
         Assembly = Assembly.LoadFile(AfterAssemblyPath);
     }
