@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
-using Mono.Cecil.Pdb;
 
 public static class AssemblyWeaver
 {
@@ -24,14 +23,12 @@ public static class AssemblyWeaver
         if (File.Exists(beforePdbPath))
             File.Copy(beforePdbPath, afterPdbPath, true);
 
-        var assemblyResolver = new DefaultAssemblyResolver();
-        var mockAssemblyResolver = new MockAssemblyResolver();
-        var readerParameters = new ReaderParameters { AssemblyResolver = assemblyResolver };
+        var assemblyResolver = new MockAssemblyResolver();
+        var readerParameters = new ReaderParameters();
         var writerParameters = new WriterParameters();
 
         if (File.Exists(afterPdbPath))
         {
-            readerParameters.SymbolReaderProvider = new PdbReaderProvider();
             readerParameters.ReadSymbols = true;
             writerParameters.WriteSymbols = true;
         }

@@ -1,0 +1,85 @@
+﻿
+//  Microsoft (R) .NET Framework IL Disassembler.  Version 4.0.30319.1
+//  Copyright (c) Microsoft Corporation.  All rights reserved.
+
+
+// warning : THIS IS A PARTIAL DISASSEMBLY, NOT SUITABLE FOR RE-ASSEMBLING
+
+
+
+.class public auto ansi beforefieldinit ClassWithDateTime
+       extends [mscorlib]System.Object
+{
+  .method public hidebysig instance valuetype [mscorlib]System.DateTime 
+          GetDateTime() cil managed
+  {
+    // Code size       11 (0xb)
+    .maxstack  1
+    .locals init ([0] valuetype [mscorlib]System.DateTime CS$1$0000)
+    .language '{3F5162F8-07C6-11D3-9053-00C04FA302A1}', '{994B45C4-E6E9-11D2-903F-00C04FA302A1}', '{5A869D0B-6611-11D3-BD2A-0000F80849BD}'
+    .line 6,6 : 5,6 'AssemblyToProcess\\ClassWithDateTime.cs'
+    IL_0000:  nop
+    .line 7,7 : 9,29 ''
+    IL_0001:  call       valuetype [mscorlib]System.DateTime DateTimeReplacement::get_Now()
+    IL_0006:  stloc.0
+    IL_0007:  br.s       IL_0009
+
+    .line 8,8 : 5,6 ''
+    IL_0009:  ldloc.0
+    IL_000a:  ret
+  } // end of method ClassWithDateTime::GetDateTime
+
+  .method public hidebysig specialname instance valuetype [mscorlib]System.DateTime 
+          get_SomeProperty() cil managed
+  {
+    // Code size       11 (0xb)
+    .maxstack  1
+    .locals init ([0] valuetype [mscorlib]System.DateTime CS$1$0000)
+    .line 10,10 : 40,41 ''
+    IL_0000:  nop
+    .line 10,10 : 42,62 ''
+    IL_0001:  call       valuetype [mscorlib]System.DateTime DateTimeReplacement::get_Now()
+    IL_0006:  stloc.0
+    IL_0007:  br.s       IL_0009
+
+    .line 10,10 : 63,64 ''
+    IL_0009:  ldloc.0
+    IL_000a:  ret
+  } // end of method ClassWithDateTime::get_SomeProperty
+
+  .method public hidebysig instance valuetype [mscorlib]System.DateTime 
+          MissingReplacement() cil managed
+  {
+    // Code size       11 (0xb)
+    .maxstack  1
+    .locals init ([0] valuetype [mscorlib]System.DateTime CS$1$0000)
+    .line 13,13 : 5,6 ''
+    IL_0000:  nop
+    .line 14,14 : 9,31 ''
+    IL_0001:  call       valuetype [mscorlib]System.DateTime [mscorlib]System.DateTime::get_Today()
+    IL_0006:  stloc.0
+    IL_0007:  br.s       IL_0009
+
+    .line 15,15 : 5,6 ''
+    IL_0009:  ldloc.0
+    IL_000a:  ret
+  } // end of method ClassWithDateTime::MissingReplacement
+
+  .method public hidebysig specialname rtspecialname 
+          instance void  .ctor() cil managed
+  {
+    // Code size       7 (0x7)
+    .maxstack  1
+    IL_0000:  ldarg.0
+    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+    IL_0006:  ret
+  } // end of method ClassWithDateTime::.ctor
+
+  .property instance valuetype [mscorlib]System.DateTime
+          SomeProperty()
+  {
+    .get instance valuetype [mscorlib]System.DateTime ClassWithDateTime::get_SomeProperty()
+  } // end of property ClassWithDateTime::SomeProperty
+} // end of class ClassWithDateTime
+
+// *********** DISASSEMBLY COMPLETE ***********************

@@ -15,15 +15,37 @@ using NUnit.Framework;
 public class ApprovedTests
 {
     [Test]
-    public void ILDasm()
+    public void ClassWithBrokenReplacement()
     {
-        Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath));
+        Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath, "ClassWithBrokenReplacement"));
     }
 
-    private static string Decompile(string assemblyPath)
+    [Test]
+    public void ClassWithDateTime()
+    {
+        Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath, "ClassWithDateTime"));
+    }
+
+    [Test]
+    public void ClassWithGenericMethodUsage()
+    {
+        Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath, "ClassWithGenericMethodUsage"));
+    }
+
+    [Test]
+    public void ClassWithGenericUsage()
+    {
+        Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath, "ClassWithGenericUsage"));
+    }
+
+    private static string Decompile(string assemblyPath, string identifier = "")
     {
         var exePath = GetPathToILDasm();
-        var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath + "\" /text /linenum")
+
+        if (!string.IsNullOrEmpty(identifier))
+            identifier = "/item:" + identifier;
+
+        var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath + "\" /text /linenum " + identifier)
         {
             RedirectStandardOutput = true,
             UseShellExecute = false,
