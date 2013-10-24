@@ -46,12 +46,12 @@ public static class CecilExtensions
             ExplicitThis = methodDef.ExplicitThis
         };
 
-        foreach (ParameterDefinition paramDef in methodDef.Parameters)
+        foreach (var paramDef in methodDef.Parameters)
         {
             methodRef.Parameters.Add(new ParameterDefinition(paramDef.Name, paramDef.Attributes, paramDef.ParameterType));
         }
 
-        foreach (GenericParameter genParamDef in methodDef.GenericParameters)
+        foreach (var genParamDef in methodDef.GenericParameters)
         {
             methodRef.GenericParameters.Add(new GenericParameter(genParamDef.Name, methodRef));
         }
