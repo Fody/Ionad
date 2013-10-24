@@ -38,29 +38,28 @@ public class ApprovedTests
         Approvals.Verify(Decompile(AssemblyWeaver.AfterAssemblyPath, "ClassWithGenericUsage"));
     }
 
-    private static string Decompile(string assemblyPath, string identifier = "")
+    private static string Decompile(string assemblyPath, string identifier)
     {
         var exePath = GetPathToILDasm();
 
         if (!string.IsNullOrEmpty(identifier))
             identifier = "/item:" + identifier;
 
-        var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath + "\" /text /linenum " + identifier)
+        using (var process = Process.Start(new ProcessStartInfo(exePath, "\"" + assemblyPath + "\" /text /linenum " + identifier)
         {
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        });
+            RedirectStandardOutput = true, UseShellExecute = false, CreateNoWindow = true
+        }))
+        {
+            var projectFolder = Path.GetFullPath(Path.GetDirectoryName(assemblyPath) + "\\..\\..\\..").Replace("\\", "\\\\");
+            projectFolder = Char.ToLower(projectFolder[0]) + projectFolder.Substring(1) + "\\\\";
 
-        var projectFolder = Path.GetFullPath(Path.GetDirectoryName(assemblyPath) + "\\..\\..\\..").Replace("\\", "\\\\");
-        projectFolder = Char.ToLower(projectFolder[0]) + projectFolder.Substring(1) + "\\\\";
-
-        process.WaitForExit(10000);
-        return string.Join(Environment.NewLine,
-            Regex.Split(process.StandardOutput.ReadToEnd(), Environment.NewLine)
-                .Where(l => !l.StartsWith("// Image base:"))
-                .Select(l => l.Replace(projectFolder, ""))
-        );
+            process.WaitForExit(10000);
+            return string.Join(Environment.NewLine,
+                Regex.Split(process.StandardOutput.ReadToEnd(), Environment.NewLine)
+                    .Where(l => !l.StartsWith("// Image base:"))
+                    .Select(l => l.Replace(projectFolder, ""))
+                );
+        }
     }
 
     private static string GetPathToILDasm()
