@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fody", "Fody\Fody.csproj", "{CD3BB09A-7217-4409-B8D9-D33194048271}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6A65A688-9C9B-4422-B70D-4662F6D2A6A9} = {6A65A688-9C9B-4422-B70D-4662F6D2A6A9}
+		{A99FCE99-5109-4082-A20B-CD60385C5E18} = {A99FCE99-5109-4082-A20B-CD60385C5E18}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceAssembly", "ReferenceAssembly\ReferenceAssembly.csproj", "{6A65A688-9C9B-4422-B70D-4662F6D2A6A9}"
 EndProject

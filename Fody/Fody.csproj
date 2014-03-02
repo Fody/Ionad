@@ -11,7 +11,6 @@
     <AssemblyName>Ionad.Fody</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <FodyPath>..\packages\Fody.1.17.4.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +53,6 @@
     <Compile Include="CecilExtensions.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Content Include="FodyWeavers.xml" />
-    <None Include="Fody.targets" />
     <None Include="NugetAssets\install.ps1" />
     <None Include="NugetAssets\Ionad.nuspec">
       <SubType>Designer</SubType>
@@ -79,5 +77,11 @@
     <Copy SourceFiles="$(OutputPath)Ionad.Fody.pdb" DestinationFolder="$(SolutionDir)NuGetBuild" />
     <PepitaPackage.WeavingTask NuGetBuildDirectory="$(SolutionDir)NuGetBuild" MetadataAssembly="$(OutputPath)Ionad.Fody.dll" />
   </Target>
-  <Import Project="Fody.targets" />
+  <Import Project="..\packages\Fody.1.21.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.21.0\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.21.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.21.0\build\Fody.targets'))" />
+  </Target>
 </Project>
