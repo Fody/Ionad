@@ -11,7 +11,6 @@ using Microsoft.Build.Utilities;
 using NUnit.Framework;
 
 [TestFixture]
-[UseReporter(typeof(DiffReporter))]
 public class ApprovedTests
 {
     [Test]
@@ -56,7 +55,7 @@ public class ApprovedTests
             process.WaitForExit(10000);
             return string.Join(Environment.NewLine,
                 Regex.Split(process.StandardOutput.ReadToEnd(), Environment.NewLine)
-                    .Where(l => !l.StartsWith("// Image base:"))
+                    .Where(l => !l.StartsWith("// Image base:") && !l.StartsWith("//  Microsoft (R) .NET Framework IL Disassembler.  Version"))
                     .Select(l => l.Replace(projectFolder, ""))
                 );
         }
