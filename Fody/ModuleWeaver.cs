@@ -88,7 +88,7 @@ public class ModuleWeaver
             if (!originalMethodDefinition.IsStatic || !replacements.ContainsKey(declaringTypeDefinition))
                 continue;
 
-            var replacementTypeReference = ModuleDefinition.Import(replacements[declaringTypeDefinition]);
+            var replacementTypeReference = ModuleDefinition.ImportReference(replacements[declaringTypeDefinition]);
             if (declaringTypeReference.IsGenericInstance)
             {
                 var declaringGenericType = (GenericInstanceType)declaringTypeReference;
@@ -97,7 +97,7 @@ public class ModuleWeaver
                 {
                     genericType.GenericArguments.Add(arg);
                 }
-                replacementTypeReference = ModuleDefinition.Import(genericType);
+                replacementTypeReference = ModuleDefinition.ImportReference(genericType);
             }
 
             var replacementMethod = replacementTypeReference.ReferenceMethod(originalMethodDefinition.Name);
@@ -123,7 +123,7 @@ public class ModuleWeaver
                     genericInstanceMethod.GenericArguments.Add(arg);
                 }
 
-                call.Operand = ModuleDefinition.Import(genericInstanceMethod);
+                call.Operand = ModuleDefinition.ImportReference(genericInstanceMethod);
             }
             else
             {
