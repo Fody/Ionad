@@ -7,7 +7,7 @@ public class ClassWithDateTime
         return DateTime.Now;
     }
 
-    public DateTime SomeProperty { get { return DateTime.Now; } }
+    public DateTime SomeProperty => DateTime.Now;
 
     public DateTime MissingReplacement()
     {

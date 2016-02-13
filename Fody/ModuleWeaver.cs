@@ -104,13 +104,13 @@ public class ModuleWeaver
 
             if (replacementMethod == null)
             {
-                LogError(String.Format("Missing '{0}.{1}()' in '{2}'", declaringTypeDefinition.FullName, originalMethodDefinition.Name, replacementTypeReference.FullName));
+                LogError($"Missing '{declaringTypeDefinition.FullName}.{originalMethodDefinition.Name}()' in '{replacementTypeReference.FullName}'");
                 continue;
             }
 
             if (!replacementMethod.Resolve().IsStatic)
             {
-                LogError(String.Format("Replacement method '{0}' is not static", replacementMethod.FullName));
+                LogError($"Replacement method '{replacementMethod.FullName}' is not static");
                 continue;
             }
 

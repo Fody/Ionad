@@ -49,7 +49,7 @@ public class ApprovedTests
         }))
         {
             var projectFolder = Path.GetFullPath(Path.GetDirectoryName(assemblyPath) + "\\..\\..\\..").Replace("\\", "\\\\");
-            projectFolder = Char.ToLower(projectFolder[0]) + projectFolder.Substring(1) + "\\\\";
+            projectFolder = char.ToLower(projectFolder[0]) + projectFolder.Substring(1) + "\\\\";
 
             process.WaitForExit(10000);
             return string.Join(Environment.NewLine,
