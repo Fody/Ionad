@@ -35,6 +35,21 @@ https://nuget.org/packages/Ionad.Fody/
         // ...
     }
 
+### Skipping replacements
+
+    [SkipStaticReplacements]
+    public void SomeMethod()
+    {
+        var time = DateTime.Now; // This does not get replaced
+        // ...
+    }
+
+    [SkipStaticReplacements]
+    public class SomeClass
+    {
+        // No replacements whatsoever in this class
+    }
+
 ## Contributors
 
   * [Cameron MacFarland](https://github.com/distantcam)
