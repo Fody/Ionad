@@ -35,7 +35,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassWithDateTimeAndNoReplacements.cs" />
     <Compile Include="ClassWithGenericUsage.cs" />
+    <Compile Include="SkipStaticReplacementsAttribute.cs" />
     <Compile Include="StaticBasic.cs" />
     <Compile Include="StaticBasicReplacementWithBrokenMethod.cs" />
     <Compile Include="ClassWithBrokenReplacement.cs" />

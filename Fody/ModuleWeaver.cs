@@ -57,12 +57,12 @@ public class ModuleWeaver
 
     private void ProcessAssembly(IEnumerable<TypeDefinition> types, Dictionary<TypeDefinition, TypeDefinition> replacements)
     {
-        foreach (var type in types)
+        foreach (var type in types.Where(t => !t.HasSkipStaticReplacementsAttribute()))
         {
-            foreach (var method in type.MethodsWithBody())
+            foreach (var method in type.MethodsWithBody().Where(m => !m.HasSkipStaticReplacementsAttribute()))
                 ReplaceCalls(method.Body, replacements);
 
-            foreach (var property in type.ConcreteProperties())
+            foreach (var property in type.ConcreteProperties().Where(m => !m.HasSkipStaticReplacementsAttribute()))
             {
                 if (property.GetMethod != null)
                     ReplaceCalls(property.GetMethod.Body, replacements);
@@ -138,7 +138,10 @@ public class ModuleWeaver
     private void RemoveAttributes(IEnumerable<TypeDefinition> types)
     {
         foreach (var typeDefinition in types)
+        {
             typeDefinition.RemoveStaticReplacementAttribute();
+            typeDefinition.RemoveSkipStaticReplacementsAttribute();
+        }
     }
 
     private void RemoveReference()

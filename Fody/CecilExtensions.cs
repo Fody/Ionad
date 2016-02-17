@@ -7,9 +7,19 @@ public static class CecilExtensions
 {
     public static void RemoveStaticReplacementAttribute(this ICustomAttributeProvider definition)
     {
+        definition.RemoveCustomAttribute("StaticReplacementAttribute");
+    }
+
+    public static void RemoveSkipStaticReplacementsAttribute(this ICustomAttributeProvider definition)
+    {
+        definition.RemoveCustomAttribute("SkipStaticReplacementsAttribute");
+    }
+
+    public static void RemoveCustomAttribute(this ICustomAttributeProvider definition, string attributeName)
+    {
         var customAttributes = definition.CustomAttributes;
 
-        var attribute = customAttributes.FirstOrDefault(x => x.AttributeType.Name == "StaticReplacementAttribute");
+        var attribute = customAttributes.FirstOrDefault(x => x.AttributeType.Name == attributeName);
 
         if (attribute != null)
         {
@@ -20,6 +30,11 @@ public static class CecilExtensions
     public static CustomAttribute GetStaticReplacementAttribute(this ICustomAttributeProvider value)
     {
         return value.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "StaticReplacementAttribute");
+    }
+
+    public static bool HasSkipStaticReplacementsAttribute(this ICustomAttributeProvider value)
+    {
+        return value.CustomAttributes.Any(a => a.AttributeType.Name == "SkipStaticReplacementsAttribute");
     }
 
     public static IEnumerable<MethodDefinition> MethodsWithBody(this TypeDefinition type)
