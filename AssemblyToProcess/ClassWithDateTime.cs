@@ -14,7 +14,7 @@ public class ClassWithDateTime
         return DateTime.Now;
     }
 
-    public DateTime SomeProperty { get { return DateTime.Now; } }
+    public DateTime SomeProperty => DateTime.Now;
 
     [SkipStaticReplacements]
     public DateTime NonReplacedSomeProperty { get { return DateTime.Now; } }
