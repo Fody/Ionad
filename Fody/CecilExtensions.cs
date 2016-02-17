@@ -24,7 +24,7 @@ public static class CecilExtensions
 
     public static IEnumerable<MethodDefinition> MethodsWithBody(this TypeDefinition type)
     {
-        return type.Methods.Where(x => x.Body != null);
+        return type.Methods.Where(x => x.Body != null && !x.IsGetter && !x.IsSetter);
     }
 
     public static IEnumerable<PropertyDefinition> ConcreteProperties(this TypeDefinition type)
