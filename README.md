@@ -4,6 +4,9 @@
 
 Ionad replaces static types with your own.
 
+[![NuGet Status](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
+
+
 ## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/Ionad.Fody.svg?style=flat)](https://www.nuget.org/packages/Ionad.Fody/)
 
 https://nuget.org/packages/Ionad.Fody/
