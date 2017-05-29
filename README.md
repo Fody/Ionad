@@ -1,17 +1,20 @@
+[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody)
+[![NuGet Status](http://img.shields.io/nuget/v/Ionad.Fody.svg?style=flat)](https://www.nuget.org/packages/Ionad.Fody/)
+
+
 ## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
 ![Ionad Icon - A black circle with 3 arrows forming an outer circle.](https://raw.github.com/Fody/Ionad/master/Icons/package_icon.png)
 
 Ionad replaces static types with your own.
 
-[![NuGet Status](https://img.shields.io/gitter/room/fody/fody.svg?style=flat)](https://gitter.im/Fody/Fody)
 
-
-## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/Ionad.Fody.svg?style=flat)](https://www.nuget.org/packages/Ionad.Fody/)
+## The nuget package
 
 https://nuget.org/packages/Ionad.Fody/
 
     PM> Install-Package Ionad.Fody
+
 
 ### Your Code
 
@@ -38,10 +41,12 @@ https://nuget.org/packages/Ionad.Fody/
         // ...
     }
 
+
 ## Contributors
 
   * [Cameron MacFarland](https://github.com/distantcam)
   * [Simon Cropp](https://github.com/simoncropp)
+
 
 ## Icon
 
