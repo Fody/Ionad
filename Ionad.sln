@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion =  14.0.22823.1
-MinimumVisualStudioVersion = 14.0.22823.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fody", "Fody\Fody.csproj", "{CD3BB09A-7217-4409-B8D9-D33194048271}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6A65A688-9C9B-4422-B70D-4662F6D2A6A9} = {6A65A688-9C9B-4422-B70D-4662F6D2A6A9}
-		{A99FCE99-5109-4082-A20B-CD60385C5E18} = {A99FCE99-5109-4082-A20B-CD60385C5E18}
-	EndProjectSection
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 15.0.26430.6
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionad/Fody", "Ionad.Fody\Ionad.Fody.csproj", "{CD3BB09A-7217-4409-B8D9-D33194048271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceAssembly", "ReferenceAssembly\ReferenceAssembly.csproj", "{6A65A688-9C9B-4422-B70D-4662F6D2A6A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ionad", "Ionad\Ionad.csproj", "{6A65A688-9C9B-4422-B70D-4662F6D2A6A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyToProcess", "AssemblyToProcess\AssemblyToProcess.csproj", "{A99FCE99-5109-4082-A20B-CD60385C5E18}"
 EndProject

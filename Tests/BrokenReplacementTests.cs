@@ -1,12 +1,11 @@
-using NUnit.Framework;
+using System.Linq;
+using Xunit;
 
-[TestFixture]
-public class BrokenReplacementTests
+public partial class ModuleWeaverTests
 {
-    [Test]
+    [Fact]
     public void EnsureErrorReported()
     {
-        var type = AssemblyWeaver.Assembly.GetType("ClassWithBrokenReplacement");
-        Assert.Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static", AssemblyWeaver.Errors);
+        Assert.Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static", testResult.Errors.Select(x=>x.Text));
     }
 }

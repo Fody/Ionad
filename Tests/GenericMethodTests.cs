@@ -1,14 +1,11 @@
-﻿using System;
-using NUnit.Framework;
+﻿using Xunit;
 
-[TestFixture]
-public class GenericMethodTests
+public partial class ModuleWeaverTests
 {
-    [Test]
-    public void EnsureHasBeenReplace()
+    [Fact]
+    public void EnsureGenericHasBeenReplace()
     {
-        var type = AssemblyWeaver.Assembly.GetType("ClassWithGenericMethodUsage");
-        var instance = (dynamic)Activator.CreateInstance(type);
+        var instance = testResult.GetInstance("ClassWithGenericMethodUsage");
         instance.Method();
     }
 }

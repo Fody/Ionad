@@ -32,7 +32,7 @@ public static class CecilExtensions
         return type.Properties.Where(x => (x.GetMethod == null || !x.GetMethod.IsAbstract) && (x.SetMethod == null || !x.SetMethod.IsAbstract));
     }
 
-    private static MethodReference CloneMethodWithDeclaringType(MethodDefinition methodDef, TypeReference declaringTypeRef)
+    static MethodReference CloneMethodWithDeclaringType(MethodDefinition methodDef, TypeReference declaringTypeRef)
     {
         if (!declaringTypeRef.IsGenericInstance || methodDef == null)
         {

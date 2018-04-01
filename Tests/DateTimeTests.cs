@@ -1,36 +1,28 @@
 ﻿using System;
-using NUnit.Framework;
+using System.Linq;
+using Xunit;
 
-[TestFixture]
-public class DateTimeTests
+public partial class ModuleWeaverTests
 {
-    private readonly Type sampleClassType;
-
-    public DateTimeTests()
-    {
-        sampleClassType = AssemblyWeaver.Assembly.GetType("ClassWithDateTime");
-    }
-
-    [Test]
+    [Fact]
     public void MethodUsesDateTime()
     {
-        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
+        var sample = testResult.GetInstance("ClassWithDateTime");
         var now = sample.GetDateTime();
-        Assert.AreEqual(new DateTime(1978, 1, 13), now);
+        Assert.Equal(new DateTime(1978, 1, 13), now);
     }
 
-    [Test]
+    [Fact]
     public void PropertyUsesDateTime()
     {
-        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
+        var sample = testResult.GetInstance("ClassWithDateTime");
         var now = sample.SomeProperty;
-        Assert.AreEqual(new DateTime(1978, 1, 13), now);
+        Assert.Equal(new DateTime(1978, 1, 13), now);
     }
 
-    [Test]
+    [Fact]
     public void MissingReplacementReportsError()
     {
-        var sample = (dynamic)Activator.CreateInstance(sampleClassType);
-        Assert.Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'", AssemblyWeaver.Errors);
+        Assert.Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'", testResult.Errors.Select(x=>x.Text));
     }
 }
