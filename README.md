@@ -9,37 +9,46 @@
 Ionad replaces static types with your own.
 
 
-## The nuget package
+## NuGet installation
 
-https://nuget.org/packages/Ionad.Fody/
+Install the [Ionad.Fody NuGet package](https://nuget.org/packages/Ionad.Fody/) and update the [Fody NuGet package](https://nuget.org/packages/Fody/):
 
-    PM> Install-Package Ionad.Fody
+```powershell
+PM> Install-Package Fody
+PM> Install-Package Ionad.Fody
+```
+
+The `Install-Package Fody` is required since NuGet always defaults to the oldest, and most buggy, version of any dependency.
 
 
 ### Your Code
 
-    [StaticReplacement(typeof(DateTime))]
-    public static class DateTimeSubstitute
-    {
-        public static IDateTime Current { get; set; }
+```csharp
+[StaticReplacement(typeof(DateTime))]
+public static class DateTimeSubstitute
+{
+    public static IDateTime Current { get; set; }
 
-        public static DateTime Now { get { return Current.Now; } }
-    }
+    public static DateTime Now { get { return Current.Now; } }
+}
 
-    public void SomeMethod()
-    {
-        var time = DateTime.Now;
-        // ...
-    }
+public void SomeMethod()
+{
+    var time = DateTime.Now;
+    // ...
+}
+```
 
 
 ### What gets compiled 
 
-    public void SomeMethod()
-    {
-        var time = DateTimeSubstitute.Now;
-        // ...
-    }
+```csharp
+public void SomeMethod()
+{
+    var time = DateTimeSubstitute.Now;
+    // ...
+}
+```
 
 
 ## Contributors
