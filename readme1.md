@@ -2,7 +2,7 @@
 [![NuGet Status](http://img.shields.io/nuget/v/Ionad.Fody.svg?style=flat)](https://www.nuget.org/packages/Ionad.Fody/)
 
 
-## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
+## This is an add-in for [Fody](https://github.com/Fody/Home/)
 
 ![Ionad Icon - A black circle with 3 arrows forming an outer circle.](https://raw.github.com/Fody/Ionad/master/package_icon.png)
 
