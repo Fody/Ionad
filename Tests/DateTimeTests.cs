@@ -2,7 +2,7 @@
 using System.Linq;
 using Xunit;
 
-public partial class ModuleWeaverTests
+public partial class ModuleWeaverTests 
 {
     [Fact]
     public void MethodUsesDateTime()
