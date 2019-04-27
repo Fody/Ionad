@@ -9,6 +9,7 @@
     <PackageTags>Static, ILWeaving, Fody, Cecil</PackageTags>
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Ionad/master/package_icon.png</PackageIconUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>http://github.com/Fody/Ionad</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
