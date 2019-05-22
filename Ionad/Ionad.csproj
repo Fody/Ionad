@@ -10,7 +10,7 @@
     <PackageOutputPath>$(SolutionDir)nugets</PackageOutputPath>
     <PackageIconUrl>https://raw.githubusercontent.com/Fody/Ionad/master/package_icon.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>http://github.com/Fody/Ionad</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Fody/Ionad</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="None" />
