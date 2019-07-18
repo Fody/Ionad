@@ -103,7 +103,7 @@ public class ModuleWeaver:BaseModuleWeaver
                 replacementTypeReference = ModuleDefinition.ImportReference(genericType);
             }
 
-            var replacementMethod = replacementTypeReference.ReferenceMethod(originalMethodDefinition.Name);
+            var replacementMethod = replacementTypeReference.ReferenceMethod(originalMethodDefinition);
 
             if (replacementMethod == null)
             {

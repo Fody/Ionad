@@ -64,8 +64,50 @@ public static class CecilExtensions
         return CloneMethodWithDeclaringType(typeRef.Resolve().Methods.FirstOrDefault(methodSelector), typeRef);
     }
 
-    public static MethodReference ReferenceMethod(this TypeReference typeRef, string methodName)
+    public static MethodReference ReferenceMethod(this TypeReference typeRef, MethodDefinition method)
     {
-        return ReferenceMethod(typeRef, m => m.Name == methodName);
+        return ReferenceMethod(typeRef, m => 
+            m.Name == method.Name && Matches(m, method)
+            );
+    }
+
+    private static bool Matches(IMethodSignature left, IMethodSignature right)
+    {
+        return ReturnMatches(left, right) &&
+               left.Parameters.Count == right.Parameters.Count &&
+               Enumerable.Zip(left.Parameters, right.Parameters, Matches).All(x => x);
+    }
+    
+    private static bool Matches(ParameterDefinition left, ParameterDefinition right)
+    {
+        if (left.ParameterType == right.ParameterType)
+            return true;
+        if (left.ParameterType.IsGenericParameter && right.ParameterType.IsGenericParameter)
+            return true;
+
+        return false;
+    }
+
+    private static bool Matches(TypeReference left, TypeReference right)
+    {
+        if (left.FullName == right.FullName)
+            return true;
+        if (left.IsGenericParameter && right.IsGenericParameter)
+            return true;
+
+        return false;
+    }
+    
+    private static bool ReturnMatches(IMethodSignature left, IMethodSignature right)
+    {
+        if (left.ReturnType.FullName == right.ReturnType.FullName &&
+            Enumerable.Zip(left.ReturnType.GenericParameters, right.ReturnType.GenericParameters, Matches).All(x => x)
+        )
+            return true;
+
+        if (left.ReturnType.IsGenericParameter && right.ReturnType.IsGenericParameter)
+            return true;
+
+        return false;
     }
 }
