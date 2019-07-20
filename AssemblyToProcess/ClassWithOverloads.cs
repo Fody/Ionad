@@ -17,17 +17,16 @@ public class ClassWithOverloads
         return StaticWithOverloads.Overloaded(0);
     }
 
-
     public int Overloaded3()
     {
         return StaticWithOverloads.Overloaded("");
     }
-    
+
     public Dictionary<int, int> Overloaded4()
     {
         return StaticWithOverloads.Overloaded<int, int>();
     }
-    
+
     public Dictionary<int, string> Overloaded5()
     {
         return StaticWithOverloads.Overloaded(0, "Hello World");

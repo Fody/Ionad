@@ -12,7 +12,7 @@ public partial class ModuleWeaverTests :
         testResult = weavingTask.ExecuteTestRun("AssemblyToProcess.dll");
     }
 
-    public ModuleWeaverTests(ITestOutputHelper output) : 
+    public ModuleWeaverTests(ITestOutputHelper output) :
         base(output)
     {
     }

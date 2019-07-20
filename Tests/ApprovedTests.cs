@@ -1,11 +1,10 @@
-#if(NET46)
+#if(NET472)
 
 using ApprovalTests;
 using Fody;
 using Xunit;
 
-public partial class ModuleWeaverTests :
-    XunitLoggingBase
+public partial class ModuleWeaverTests
 {
     [Fact]
     public void ClassWithBrokenReplacement()

@@ -7,7 +7,7 @@ public static class StaticWithOverloads
     {
         throw new NotImplementedException();
     }
-    
+
     public static int Overloaded()
     {
         throw new NotImplementedException();
@@ -17,8 +17,7 @@ public static class StaticWithOverloads
     {
         throw new NotImplementedException();
     }
-    
-    
+
     public static int Overloaded(string i)
     {
         throw new NotImplementedException();
@@ -28,7 +27,7 @@ public static class StaticWithOverloads
     {
         throw new NotImplementedException();
     }
-    
+
     public static Dictionary<TKey, TValue> Overloaded<TKey, TValue>(TKey key, TValue value)
     {
         throw new NotImplementedException();

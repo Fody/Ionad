@@ -1,22 +1,20 @@
 ﻿.class public auto ansi beforefieldinit ClassWithGenericMethodUsage
-       extends [mscorlib]System.Object
+extends [mscorlib]System.Object
 {
-  .method public hidebysig instance void 
-          Method() cil managed
-  {
-    // Code size       7 (0x7)
-    .maxstack  1
-    IL_0000:  call       !!0 StaticWithGenericMethodReplacement::Method<string>()
-    IL_0005:  pop
-    IL_0006:  ret
-  } 
-  .method public hidebysig specialname rtspecialname 
-          instance void  .ctor() cil managed
-  {
-    // Code size       7 (0x7)
-    .maxstack  1
-    IL_0000:  ldarg.0
-    IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
-    IL_0006:  ret
-  } 
+.method public hidebysig instance void
+Method() cil managed
+{
+.maxstack  1
+IL_0000:  call       !!0 StaticWithGenericMethodReplacement::Method<string>()
+IL_0005:  pop
+IL_0006:  ret
+}
+.method public hidebysig specialname rtspecialname
+instance void  .ctor() cil managed
+{
+.maxstack  1
+IL_0000:  ldarg.0
+IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+IL_0006:  ret
+}
 }
