@@ -51,12 +51,6 @@ public void SomeMethod()
 ```
 
 
-## Contributors
-
-  * [Cameron MacFarland](https://github.com/distantcam)
-  * [Simon Cropp](https://github.com/simoncropp)
-
-
 ## Icon
 
-[Interchange](http://thenounproject.com/noun/interchange/#icon-No2031) designed by [Laurent Patain](http://thenounproject.com/____Lo) from The Noun Project
+[Interchange](https://thenounproject.com/noun/interchange/#icon-No2031) designed by [Laurent Patain](https://thenounproject.com/____Lo) from [The Noun Project](https://thenounproject.com).
