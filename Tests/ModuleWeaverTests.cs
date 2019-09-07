@@ -2,7 +2,7 @@ using Fody;
 using Xunit.Abstractions;
 
 public partial class ModuleWeaverTests :
-    XunitLoggingBase
+    XunitApprovalBase
 {
     static TestResult testResult;
 
