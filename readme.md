@@ -50,6 +50,35 @@ public void SomeMethod()
 }
 ```
 
+You can also reference methods within the original static class to add defaults to optional parameters. For example:
+
+```csharp
+[StaticReplacement(typeof(System.Reactive.Linq.Observable))]
+public static class QueryableSubstitute
+{
+
+    public static IObservable<IList<TSource>> Delay<TSource>(this IObservable<TSource> source, TimeSpan timeSpan)
+    {
+        return System.Reactive.Linq.Delay<TSource>(source, timeSpan, RxApp.TaskpoolScheduler);
+    }
+}
+
+public async Task<int> SomeMethod()
+{
+    return await Observable.Return(1).Delay(TimeSpan.FromSeconds(1)).ToTask();
+}
+```
+
+
+### What gets compiled 
+
+```csharp
+public async Task<int> SomeMethod()
+{
+    return await Observable.Return(1).Delay(TimeSpan.FromSeconds(1), RxApp.TaskpoolScheduler).ToTask();
+}
+```
+
 
 ## Contributors
 
