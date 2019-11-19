@@ -56,7 +56,6 @@ You can also reference methods within the original static class to add defaults 
 [StaticReplacement(typeof(System.Reactive.Linq.Observable))]
 public static class QueryableSubstitute
 {
-
     public static IObservable<IList<TSource>> Delay<TSource>(this IObservable<TSource> source, TimeSpan timeSpan)
     {
         return System.Reactive.Linq.Delay<TSource>(source, timeSpan, RxApp.TaskpoolScheduler);

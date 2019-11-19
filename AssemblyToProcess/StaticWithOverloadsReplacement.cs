@@ -31,6 +31,7 @@ public static class StaticWithOverloadsReplacement
 
     public static Dictionary<TKey, TValue> Overloaded<TKey, TValue>(TKey key, TValue value)
     {
-        return new Dictionary<TKey, TValue>(){ {key, value }};
+        return new Dictionary<TKey, TValue>
+            { {key, value }};
     }
 }

@@ -5,7 +5,8 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 
-public class ModuleWeaver:BaseModuleWeaver
+public class ModuleWeaver:
+    BaseModuleWeaver
 {
     public override void Execute()
     {
@@ -53,8 +54,6 @@ public class ModuleWeaver:BaseModuleWeaver
     {
         foreach (var type in types)
         {
-            
-            
             foreach (var method in type.MethodsWithBody())
             {
                 ReplaceCalls(method.Body, replacements);
@@ -93,7 +92,6 @@ public class ModuleWeaver:BaseModuleWeaver
                 continue;
             }
 
-
             var replacementTargetType = replacements[declaringTypeDefinition];
             if (IsReplacementOnSelf(body, replacementTargetType))
             {
@@ -102,8 +100,7 @@ public class ModuleWeaver:BaseModuleWeaver
                 // Allowing decorator style programming in Ionad.
                 continue;
             }
-            
-            
+
             var replacementTypeReference = ModuleDefinition.ImportReference(replacementTargetType);
             if (declaringTypeReference.IsGenericInstance)
             {
@@ -155,9 +152,6 @@ public class ModuleWeaver:BaseModuleWeaver
     /// This method is to try to stop replacing calls to the base method from the replacement
     /// class. This allows the replacement class to decorate the base methods.
     /// </summary>
-    /// <param name="body"></param>
-    /// <param name="replacementTargetType"></param>
-    /// <returns></returns>
     static bool IsReplacementOnSelf(MethodBody body, TypeDefinition replacementTargetType)
     {
         var methodDeclaringType = body.Method.DeclaringType;
@@ -171,9 +165,14 @@ public class ModuleWeaver:BaseModuleWeaver
         bool IsNestedClassMethod(TypeDefinition methodType)
         {
             if (methodType == replacementTargetType)
+            {
                 return true;
+            }
+
             if (methodType.IsNestedPrivate)
+            {
                 return IsNestedClassMethod(methodType.DeclaringType);
+            }
             return false;
         }
         return IsNestedClassMethod(methodDeclaringType);

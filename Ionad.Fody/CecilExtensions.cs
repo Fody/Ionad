@@ -66,19 +66,19 @@ public static class CecilExtensions
 
     public static MethodReference ReferenceMethod(this TypeReference typeRef, MethodDefinition method)
     {
-        return ReferenceMethod(typeRef, m => 
+        return ReferenceMethod(typeRef, m =>
             m.Name == method.Name && Matches(m, method)
-            );
+        );
     }
 
-    private static bool Matches(IMethodSignature left, IMethodSignature right)
+    static bool Matches(IMethodSignature left, IMethodSignature right)
     {
         return ReturnMatches(left, right) &&
                left.Parameters.Count == right.Parameters.Count &&
-               Enumerable.Zip(left.Parameters, right.Parameters, Matches).All(x => x);
+               left.Parameters.Zip(right.Parameters, Matches).All(x => x);
     }
-    
-    private static bool Matches(ParameterDefinition left, ParameterDefinition right)
+
+    static bool Matches(ParameterDefinition left, ParameterDefinition right)
     {
         if (left.ParameterType == right.ParameterType)
             return true;
@@ -88,7 +88,7 @@ public static class CecilExtensions
         return false;
     }
 
-    private static bool Matches(TypeReference left, TypeReference right)
+    static bool Matches(TypeReference left, TypeReference right)
     {
         if (left.FullName == right.FullName)
             return true;
@@ -97,16 +97,18 @@ public static class CecilExtensions
 
         return false;
     }
-    
-    private static bool ReturnMatches(IMethodSignature left, IMethodSignature right)
+
+    static bool ReturnMatches(IMethodSignature left, IMethodSignature right)
     {
         if (left.ReturnType.FullName == right.ReturnType.FullName &&
-            Enumerable.Zip(left.ReturnType.GenericParameters, right.ReturnType.GenericParameters, Matches).All(x => x)
+            left.ReturnType.GenericParameters.Zip(right.ReturnType.GenericParameters, Matches).All(x => x)
         )
             return true;
 
         if (left.ReturnType.IsGenericParameter && right.ReturnType.IsGenericParameter)
+        {
             return true;
+        }
 
         return false;
     }
