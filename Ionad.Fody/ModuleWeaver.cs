@@ -53,6 +53,8 @@ public class ModuleWeaver:BaseModuleWeaver
     {
         foreach (var type in types)
         {
+            
+            
             foreach (var method in type.MethodsWithBody())
             {
                 ReplaceCalls(method.Body, replacements);
@@ -91,7 +93,18 @@ public class ModuleWeaver:BaseModuleWeaver
                 continue;
             }
 
-            var replacementTypeReference = ModuleDefinition.ImportReference(replacements[declaringTypeDefinition]);
+
+            var replacementTargetType = replacements[declaringTypeDefinition];
+            if (IsReplacementOnSelf(body, replacementTargetType))
+            {
+                // Skip replacement if the replacement call site is in the replacement target class
+                // this allows the Replacement class to be able to call the original class methods
+                // Allowing decorator style programming in Ionad.
+                continue;
+            }
+            
+            
+            var replacementTypeReference = ModuleDefinition.ImportReference(replacementTargetType);
             if (declaringTypeReference.IsGenericInstance)
             {
                 var declaringGenericType = (GenericInstanceType)declaringTypeReference;
@@ -136,6 +149,34 @@ public class ModuleWeaver:BaseModuleWeaver
 
         body.InitLocals = true;
         body.OptimizeMacros();
+    }
+
+    /// <summary>
+    /// This method is to try to stop replacing calls to the base method from the replacement
+    /// class. This allows the replacement class to decorate the base methods.
+    /// </summary>
+    /// <param name="body"></param>
+    /// <param name="replacementTargetType"></param>
+    /// <returns></returns>
+    static bool IsReplacementOnSelf(MethodBody body, TypeDefinition replacementTargetType)
+    {
+        var methodDeclaringType = body.Method.DeclaringType;
+
+        // We don't want to replace calls in nested classes either, because
+        // the C# compiler regularly generates nested classes for certain
+        // state machine like methods. For examples:
+        //  1) yield return xxx;
+        //  2) await Task
+        //  3) lambda variable captures
+        bool IsNestedClassMethod(TypeDefinition methodType)
+        {
+            if (methodType == replacementTargetType)
+                return true;
+            if (methodType.IsNestedPrivate)
+                return IsNestedClassMethod(methodType.DeclaringType);
+            return false;
+        }
+        return IsNestedClassMethod(methodDeclaringType);
     }
 
     void RemoveAttributes(IEnumerable<TypeDefinition> types)
