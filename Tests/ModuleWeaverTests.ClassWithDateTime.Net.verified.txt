@@ -1,4 +1,4 @@
-﻿.class public auto ansi beforefieldinit ClassWithDateTime
+.class public auto ansi beforefieldinit ClassWithDateTime
 extends [mscorlib]System.Object
 {
 .method public hidebysig instance valuetype [mscorlib]System.DateTime

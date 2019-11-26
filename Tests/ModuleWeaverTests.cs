@@ -1,8 +1,9 @@
 using Fody;
+using VerifyXunit;
 using Xunit.Abstractions;
 
 public partial class ModuleWeaverTests :
-    XunitApprovalBase
+    VerifyBase
 {
     static TestResult testResult;
 

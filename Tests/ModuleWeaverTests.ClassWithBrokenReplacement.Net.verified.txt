@@ -1,4 +1,4 @@
-﻿.class public auto ansi beforefieldinit ClassWithBrokenReplacement
+.class public auto ansi beforefieldinit ClassWithBrokenReplacement
 extends [mscorlib]System.Object
 {
 .method public hidebysig instance void

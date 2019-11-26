@@ -1,34 +1,34 @@
-#if(NET472)
-
-using ApprovalTests;
+using System.Threading.Tasks;
 using Fody;
 using Xunit;
 
 public partial class ModuleWeaverTests
 {
     [Fact]
-    public void ClassWithBrokenReplacement()
+    public Task ClassWithBrokenReplacement()
     {
-        Approvals.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"));
+        UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"));
     }
 
     [Fact]
-    public void ClassWithDateTime()
+    public Task ClassWithDateTime()
     {
-        Approvals.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"));
+        UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"));
     }
 
     [Fact]
-    public void ClassWithGenericMethodUsage()
+    public Task ClassWithGenericMethodUsage()
     {
-        Approvals.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"));
+        UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"));
     }
 
     [Fact]
-    public void ClassWithGenericUsage()
+    public Task ClassWithGenericUsage()
     {
-        Approvals.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"));
+        UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"));
     }
 }
-
-#endif
