@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Fody;
+using Verify;
 using Xunit;
 
 public partial class ModuleWeaverTests
@@ -7,28 +8,32 @@ public partial class ModuleWeaverTests
     [Fact]
     public Task ClassWithBrokenReplacement()
     {
-        UniqueForRuntime();
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"));
+        var settings = new VerifySettings();
+        settings.UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
     }
 
     [Fact]
     public Task ClassWithDateTime()
     {
-        UniqueForRuntime();
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"));
+        var settings = new VerifySettings();
+        settings.UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
     }
 
     [Fact]
     public Task ClassWithGenericMethodUsage()
     {
-        UniqueForRuntime();
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"));
+        var settings = new VerifySettings();
+        settings.UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
     }
 
     [Fact]
     public Task ClassWithGenericUsage()
     {
-        UniqueForRuntime();
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"));
+        var settings = new VerifySettings();
+        settings.UniqueForRuntime();
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
     }
 }
