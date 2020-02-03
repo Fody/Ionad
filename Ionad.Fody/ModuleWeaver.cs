@@ -16,7 +16,7 @@ public class ModuleWeaver:
 
         if (replacements.Count == 0)
         {
-            LogInfo("No Static Replacements found");
+            WriteInfo("No Static Replacements found");
         }
         else
         {
@@ -117,13 +117,13 @@ public class ModuleWeaver:
 
             if (replacementMethod == null)
             {
-                LogError($"Missing '{declaringTypeDefinition.FullName}.{originalMethodDefinition.Name}()' in '{replacementTypeReference.FullName}'");
+                WriteError($"Missing '{declaringTypeDefinition.FullName}.{originalMethodDefinition.Name}()' in '{replacementTypeReference.FullName}'");
                 continue;
             }
 
             if (!replacementMethod.Resolve().IsStatic)
             {
-                LogError($"Replacement method '{replacementMethod.FullName}' is not static");
+                WriteError($"Replacement method '{replacementMethod.FullName}' is not static");
                 continue;
             }
 
