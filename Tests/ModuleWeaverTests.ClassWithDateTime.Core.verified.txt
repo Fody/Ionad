@@ -1,0 +1,38 @@
+.class public auto ansi beforefieldinit ClassWithDateTime
+extends [netstandard]System.Object
+{
+.method public hidebysig instance valuetype [netstandard]System.DateTime
+GetDateTime() cil managed
+{
+.maxstack  1
+IL_0000:  call       valuetype [netstandard]System.DateTime DateTimeReplacement::get_Now()
+IL_0005:  ret
+}
+.method public hidebysig specialname instance valuetype [netstandard]System.DateTime
+get_SomeProperty() cil managed
+{
+.maxstack  1
+IL_0000:  call       valuetype [netstandard]System.DateTime DateTimeReplacement::get_Now()
+IL_0005:  ret
+}
+.method public hidebysig instance valuetype [netstandard]System.DateTime
+MissingReplacement() cil managed
+{
+.maxstack  1
+IL_0000:  call       valuetype [netstandard]System.DateTime [netstandard]System.DateTime::get_Today()
+IL_0005:  ret
+}
+.method public hidebysig specialname rtspecialname
+instance void  .ctor() cil managed
+{
+.maxstack  1
+IL_0000:  ldarg.0
+IL_0001:  call       instance void [netstandard]System.Object::.ctor()
+IL_0006:  ret
+}
+.property instance valuetype [netstandard]System.DateTime
+SomeProperty()
+{
+.get instance valuetype [netstandard]System.DateTime ClassWithDateTime::get_SomeProperty()
+}
+}
