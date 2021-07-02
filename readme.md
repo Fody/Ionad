@@ -65,7 +65,7 @@ public static class QueryableSubstitute
 {
     public static IObservable<IList<TSource>> Delay<TSource>(this IObservable<TSource> source, TimeSpan timeSpan)
     {
-        return System.Reactive.Linq.Delay<TSource>(source, timeSpan, RxApp.TaskpoolScheduler);
+        return Linq.Delay<TSource>(source, timeSpan, RxApp.TaskpoolScheduler);
     }
 }
 
