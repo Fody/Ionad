@@ -11,7 +11,7 @@ public partial class ModuleWeaverTests
     {
         var settings = new VerifySettings();
         settings.UniqueForRuntime();
-        return Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
     }
 
     [Fact]
@@ -19,7 +19,7 @@ public partial class ModuleWeaverTests
     {
         var settings = new VerifySettings();
         settings.UniqueForRuntime();
-        return Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public partial class ModuleWeaverTests
     {
         var settings = new VerifySettings();
         settings.UniqueForRuntime();
-        return Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
     }
 
     [Fact]
@@ -35,6 +35,6 @@ public partial class ModuleWeaverTests
     {
         var settings = new VerifySettings();
         settings.UniqueForRuntime();
-        return Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
+        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
     }
 }
