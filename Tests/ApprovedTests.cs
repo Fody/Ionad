@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Fody;
 using VerifyTests;
-using VerifyXunit;
 using Xunit;
 
 public partial class ModuleWeaverTests

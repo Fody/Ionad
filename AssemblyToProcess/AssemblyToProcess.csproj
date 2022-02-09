@@ -5,6 +5,7 @@
     <DisableFody>true</DisableFody>
   </PropertyGroup>
   <ItemGroup>
+    <Using Remove="System.Net.Http" />
     <ProjectReference Include="..\Ionad\Ionad.csproj" />
   </ItemGroup>
 </Project>
