@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ionad
+﻿namespace Ionad
 {
     /// <summary>
     /// Marks a class as a replacement for a static class.
