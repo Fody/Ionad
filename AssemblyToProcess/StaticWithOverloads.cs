@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 public static class StaticWithOverloads
 {
     public static int Overloaded(long i)

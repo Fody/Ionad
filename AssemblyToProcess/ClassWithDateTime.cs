@@ -1,6 +1,4 @@
-﻿using System;
-
-public class ClassWithDateTime
+﻿public class ClassWithDateTime
 {
     public DateTime GetDateTime()
     {

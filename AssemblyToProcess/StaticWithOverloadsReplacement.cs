@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Ionad;
 
 [StaticReplacement(typeof(StaticWithOverloads))]

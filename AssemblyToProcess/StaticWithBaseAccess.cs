@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 public static class StaticWithBaseAccess
 {
     public static int ReplacedCount => 0;

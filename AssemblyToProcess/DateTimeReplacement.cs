@@ -1,4 +1,3 @@
-using System;
 using Ionad;
 
 [StaticReplacement(typeof(DateTime))]

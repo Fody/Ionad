@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class ClassWithOverloads
 {
     public int Overloaded0()

@@ -1,6 +1,4 @@
-﻿using System;
-
-public class StaticWithGenericMethod
+﻿public class StaticWithGenericMethod
 {
     public static T Method<T>()
     {

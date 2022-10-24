@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Fody;
+﻿using Fody;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -30,7 +28,7 @@ public class ModuleWeaver:
         yield break;
     }
 
-    Dictionary<TypeDefinition, TypeDefinition> FindReplacements(IEnumerable<TypeDefinition> types)
+    static Dictionary<TypeDefinition, TypeDefinition> FindReplacements(IEnumerable<TypeDefinition> types)
     {
         var replacements = new Dictionary<TypeDefinition, TypeDefinition>();
 
@@ -178,7 +176,7 @@ public class ModuleWeaver:
         return IsNestedClassMethod(methodDeclaringType);
     }
 
-    void RemoveAttributes(IEnumerable<TypeDefinition> types)
+    static void RemoveAttributes(IEnumerable<TypeDefinition> types)
     {
         foreach (var typeDefinition in types)
         {
