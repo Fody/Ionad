@@ -6,13 +6,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FodyHelpers" Version="6.6.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Xunit" Version="2.4.2" />
-    <PackageReference Include="XunitContext" Version="3.2.4" />
-    <PackageReference Include="Verify.Xunit" Version="18.0.0" />
+    <PackageReference Include="XunitContext" Version="3.2.5" />
+    <PackageReference Include="Verify.Xunit" Version="19.7.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
     <ProjectReference Include="..\Ionad.Fody\Ionad.Fody.csproj" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 </Project>
