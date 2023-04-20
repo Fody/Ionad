@@ -15,6 +15,6 @@
   <ItemGroup>
     <Using Remove="System.Net.Http" />
     <PackageReference Include="FodyPackaging" Version="6.6.4" PrivateAssets="All" />
-    <PackageReference Include="Fody" Version="6.6.4" PrivateAssets="none" />
+    <PackageReference Include="Fody" Version="6.7.0" PrivateAssets="none" />
   </ItemGroup>
 </Project>
