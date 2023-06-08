@@ -42,7 +42,7 @@ public static class StaticWithBaseAccessReplacement
 
 public static class ThrowOnRecursion
 {
-    static AsyncLocal<int> CallCount = new AsyncLocal<int>();
+    static AsyncLocal<int> CallCount = new();
 
     public static IDisposable Check()
     {
