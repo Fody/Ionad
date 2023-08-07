@@ -11,7 +11,7 @@
     <PackageReference Include="XunitContext" Version="3.3.1" />
     <PackageReference Include="Verify.Xunit" Version="20.6.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.0" />
     <ProjectReference Include="..\AssemblyToProcess\AssemblyToProcess.csproj" />
     <ProjectReference Include="..\Ionad.Fody\Ionad.Fody.csproj" />
   </ItemGroup>
