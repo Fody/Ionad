@@ -12,34 +12,26 @@ public class ModuleWeaverTests
     {
         var weavingTask = new ModuleWeaver();
         testResult = weavingTask.ExecuteTestRun("AssemblyToProcess.dll");
-        settings = new VerifySettings();
+        settings = new();
         settings.UniqueForRuntime();
         settings.UniqueForAssemblyConfiguration();
     }
 
     [Fact]
-    public Task ClassWithBrokenReplacement()
-    {
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
-    }
+    public Task ClassWithBrokenReplacement() =>
+        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
 
     [Fact]
-    public Task ClassWithDateTime()
-    {
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
-    }
+    public Task ClassWithDateTime() =>
+        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
 
     [Fact]
-    public Task ClassWithGenericMethodUsage()
-    {
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
-    }
+    public Task ClassWithGenericMethodUsage() =>
+        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
 
     [Fact]
-    public Task ClassWithGenericUsage()
-    {
-        return Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
-    }
+    public Task ClassWithGenericUsage() =>
+        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
 
     [Fact]
     public void EnsureHasCanAccessBaseMethodsWithoutStackOverflow()
@@ -70,10 +62,8 @@ public class ModuleWeaverTests
     }
 
     [Fact]
-    public void EnsureErrorReported()
-    {
-        Assert.Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static", testResult.Errors.Select(x => x.Text));
-    }
+    public void EnsureErrorReported() =>
+        Assert.Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static", testResult.Errors.Select(_ => _.Text));
 
     [Fact]
     public void MethodUsesDateTime()
@@ -92,10 +82,8 @@ public class ModuleWeaverTests
     }
 
     [Fact]
-    public void MissingReplacementReportsError()
-    {
-        Assert.Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'", testResult.Errors.Select(x => x.Text));
-    }
+    public void MissingReplacementReportsError() =>
+        Assert.Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'", testResult.Errors.Select(_ => _.Text));
 
     [Fact]
     public void EnsureGenericHasBeenReplace()

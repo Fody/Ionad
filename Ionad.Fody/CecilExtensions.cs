@@ -6,7 +6,7 @@ public static class CecilExtensions
     {
         var customAttributes = definition.CustomAttributes;
 
-        var attribute = customAttributes.FirstOrDefault(x => x.AttributeType.Name == "StaticReplacementAttribute");
+        var attribute = customAttributes.FirstOrDefault(_ => _.AttributeType.Name == "StaticReplacementAttribute");
 
         if (attribute != null)
         {
@@ -21,7 +21,7 @@ public static class CecilExtensions
 
     public static IEnumerable<MethodDefinition> MethodsWithBody(this TypeDefinition type)
     {
-        return type.Methods.Where(x => x.Body != null);
+        return type.Methods.Where(_ => _.Body != null);
     }
 
     public static IEnumerable<PropertyDefinition> ConcreteProperties(this TypeDefinition type)
@@ -45,12 +45,12 @@ public static class CecilExtensions
 
         foreach (var paramDef in methodDef.Parameters)
         {
-            methodRef.Parameters.Add(new ParameterDefinition(paramDef.Name, paramDef.Attributes, paramDef.ParameterType));
+            methodRef.Parameters.Add(new(paramDef.Name, paramDef.Attributes, paramDef.ParameterType));
         }
 
         foreach (var genParamDef in methodDef.GenericParameters)
         {
-            methodRef.GenericParameters.Add(new GenericParameter(genParamDef.Name, methodRef));
+            methodRef.GenericParameters.Add(new(genParamDef.Name, methodRef));
         }
 
         return methodRef;
@@ -72,7 +72,7 @@ public static class CecilExtensions
     {
         return ReturnMatches(left, right) &&
                left.Parameters.Count == right.Parameters.Count &&
-               left.Parameters.Zip(right.Parameters, Matches).All(x => x);
+               left.Parameters.Zip(right.Parameters, Matches).All(_ => _);
     }
 
     static bool Matches(ParameterDefinition left, ParameterDefinition right)
@@ -98,7 +98,7 @@ public static class CecilExtensions
     static bool ReturnMatches(IMethodSignature left, IMethodSignature right)
     {
         if (left.ReturnType.FullName == right.ReturnType.FullName &&
-            left.ReturnType.GenericParameters.Zip(right.ReturnType.GenericParameters, Matches).All(x => x)
+            left.ReturnType.GenericParameters.Zip(right.ReturnType.GenericParameters, Matches).All(_ => _)
         )
             return true;
 

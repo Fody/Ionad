@@ -76,7 +76,7 @@ public class ModuleWeaver:
     {
         body.SimplifyMacros();
 
-        var calls = body.Instructions.Where(i => i.OpCode == OpCodes.Call);
+        var calls = body.Instructions.Where(_ => _.OpCode == OpCodes.Call);
 
         foreach (var call in calls)
         {
