@@ -9,8 +9,8 @@ public class ModuleWeaverTests
 
     static ModuleWeaverTests()
     {
-        var weavingTask = new ModuleWeaver();
-        testResult = weavingTask.ExecuteTestRun("AssemblyToProcess.dll");
+        var weaver = new ModuleWeaver();
+        testResult = weaver.ExecuteTestRun("AssemblyToProcess.dll");
         settings = new();
         settings.UniqueForRuntime();
         settings.UniqueForAssemblyConfiguration();
