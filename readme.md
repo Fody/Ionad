@@ -1,6 +1,5 @@
 # <img src="/package_icon.png" height="30px"> Ionad.Fody
 
-[![Chat on Gitter](https://img.shields.io/gitter/room/fody/fody.svg)](https://gitter.im/Fody/Fody)
 [![NuGet Status](https://img.shields.io/nuget/v/Ionad.Fody.svg)](https://www.nuget.org/packages/Ionad.Fody/)
 
 Ionad replaces static types with your own.
