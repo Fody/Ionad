@@ -1,4 +1,5 @@
 using Fody;
+using TestResult = Fody.TestResult;
 #pragma warning disable CS0618
 
 public class ModuleWeaverTests
@@ -16,126 +17,138 @@ public class ModuleWeaverTests
         settings.UniqueForAssemblyConfiguration();
     }
 
-    [Fact]
-    public Task ClassWithBrokenReplacement() =>
-        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
+    [Test]
+    public async Task ClassWithBrokenReplacement() =>
+        await Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithBrokenReplacement"), settings);
 
-    [Fact]
-    public Task ClassWithDateTime() =>
-        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
+    [Test]
+    public async Task ClassWithDateTime() =>
+        await Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithDateTime"), settings);
 
-    [Fact]
-    public Task ClassWithGenericMethodUsage() =>
-        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
+    [Test]
+    public async Task ClassWithGenericMethodUsage() =>
+        await Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericMethodUsage"), settings);
 
-    [Fact]
-    public Task ClassWithGenericUsage() =>
-        Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
+    [Test]
+    public async Task ClassWithGenericUsage() =>
+        await Verifier.Verify(Ildasm.Decompile(testResult.AssemblyPath, "ClassWithGenericUsage"), settings);
 
-    [Fact]
-    public void EnsureHasCanAccessBaseMethodsWithoutStackOverflow()
+    [Test]
+    public async Task EnsureHasCanAccessBaseMethodsWithoutStackOverflow()
     {
         var instance = testResult.GetInstance("ClassWithBaseAccess");
-        Assert.Equal(1, instance.ReplacedCount);
+        int replacedCount = instance.ReplacedCount;
+        await Assert.That(replacedCount).IsEqualTo(1);
     }
 
-    [Fact]
-    public void EnsureHasCanAccessBaseMethodsWithinAYield()
+    [Test]
+    public async Task EnsureHasCanAccessBaseMethodsWithinAYield()
     {
         var instance = testResult.GetInstance("ClassWithBaseAccess");
-        Assert.Equal(Enumerable.Range(10, 10), instance.Yield);
+        IEnumerable<int> yielded = instance.Yield;
+        await Assert.That(yielded).IsEquivalentTo(Enumerable.Range(10, 10));
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureHasCanAccessBaseMethodViaLambda()
     {
         var instance = testResult.GetInstance("ClassWithBaseAccess");
-        Assert.Equal(1, await instance.AsyncWithLambdaReplacement);
+        int result = await instance.AsyncWithLambdaReplacement;
+        await Assert.That(result).IsEqualTo(1);
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureHasCanAccessBaseMethodWorksWithAsyncDecoration()
     {
         var instance = testResult.GetInstance("ClassWithBaseAccess");
-        Assert.Equal(1, await instance.AsyncDecorator);
+        int result = await instance.AsyncDecorator;
+        await Assert.That(result).IsEqualTo(1);
     }
 
-    [Fact]
-    public void EnsureErrorReported() =>
-        Assert.Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static", testResult.Errors.Select(_ => _.Text));
+    [Test]
+    public async Task EnsureErrorReported() =>
+        await Assert.That(testResult.Errors.Select(_ => _.Text))
+            .Contains("Replacement method 'System.Void StaticBasicReplacementWithBrokenMethod::SomeMethod()' is not static");
 
-    [Fact]
-    public void MethodUsesDateTime()
+    [Test]
+    public async Task MethodUsesDateTime()
     {
         var sample = testResult.GetInstance("ClassWithDateTime");
-        var now = sample.GetDateTime();
-        Assert.Equal(new DateTime(1978, 1, 13), now);
+        DateTime now = sample.GetDateTime();
+        await Assert.That(now).IsEqualTo(new DateTime(1978, 1, 13));
     }
 
-    [Fact]
-    public void PropertyUsesDateTime()
+    [Test]
+    public async Task PropertyUsesDateTime()
     {
         var sample = testResult.GetInstance("ClassWithDateTime");
-        var now = sample.SomeProperty;
-        Assert.Equal(new DateTime(1978, 1, 13), now);
+        DateTime now = sample.SomeProperty;
+        await Assert.That(now).IsEqualTo(new DateTime(1978, 1, 13));
     }
 
-    [Fact]
-    public void MissingReplacementReportsError() =>
-        Assert.Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'", testResult.Errors.Select(_ => _.Text));
+    [Test]
+    public async Task MissingReplacementReportsError() =>
+        await Assert.That(testResult.Errors.Select(_ => _.Text))
+            .Contains("Missing 'System.DateTime.get_Today()' in 'DateTimeReplacement'");
 
-    [Fact]
+    [Test]
     public void EnsureGenericHasBeenReplace()
     {
         var instance = testResult.GetInstance("ClassWithGenericMethodUsage");
         instance.Method();
     }
 
-    [Fact]
-    public void EnsureFirstOverloadWithGetsReplaced()
+    [Test]
+    public async Task EnsureFirstOverloadWithGetsReplaced()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
-        Assert.Equal(-1, instance.Overloaded0());
+        int result = instance.Overloaded0();
+        await Assert.That(result).IsEqualTo(-1);
     }
 
-    [Fact]
-    public void EnsureOverloadWithNoArgumentsWorks()
+    [Test]
+    public async Task EnsureOverloadWithNoArgumentsWorks()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
-        Assert.Equal(0, instance.Overloaded1());
+        int result = instance.Overloaded1();
+        await Assert.That(result).IsEqualTo(0);
     }
 
-    [Fact]
-    public void EnsureOverloadWithWithDifferentTypeWorks()
+    [Test]
+    public async Task EnsureOverloadWithWithDifferentTypeWorks()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
-        Assert.Equal(1, instance.Overloaded2());
+        int result = instance.Overloaded2();
+        await Assert.That(result).IsEqualTo(1);
     }
 
-    [Fact]
-    public void EnsureOverloadWithWithDifferentStringWorks()
+    [Test]
+    public async Task EnsureOverloadWithWithDifferentStringWorks()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
-        Assert.Equal(2, instance.Overloaded3());
+        int result = instance.Overloaded3();
+        await Assert.That(result).IsEqualTo(2);
     }
 
-    [Fact]
-    public void EnsureOverloadGenericReturn()
+    [Test]
+    public async Task EnsureOverloadGenericReturn()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
         var ret = instance.Overloaded4();
-        Assert.Equal(0, ret.Count);
+        int count = ret.Count;
+        await Assert.That(count).IsEqualTo(0);
     }
 
-    [Fact]
-    public void EnsureOverloadGenericParamAndReturn()
+    [Test]
+    public async Task EnsureOverloadGenericParamAndReturn()
     {
         var instance = testResult.GetInstance("ClassWithOverloads");
         var ret = instance.Overloaded5();
-        Assert.Equal(1, ret.Count);
+        int count = ret.Count;
+        await Assert.That(count).IsEqualTo(1);
     }
 
-    [Fact]
+    [Test]
     public void EnsureHasBeenReplace()
     {
         var instance = testResult.GetInstance("ClassWithGenericUsage");
